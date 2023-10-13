@@ -1,13 +1,16 @@
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
+import {fetchTopAlbums} from './api/api';
+import Card from './components/Card/Card';
+import { useEffect, useState } from "react";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [topAlbumsData, setTopAlbumsData] = useState([]);
   const generateData = async () => {
     try {
       const res = await fetchTopAlbums();
-      setData(res);
+      setTopAlbumsData(res);
     } catch (err) {
       console.log(err);
     }
@@ -20,10 +23,15 @@ function App() {
     <div>
      <Navbar/>
      <Hero/>
+     {
+      topAlbumsData.map((item)=>{
+        return (
+          <Card data={item} type="albums"/>
+        )
+      })
+     }
     </div>
   );
 }
 
 export default App;
-
-//add comment to push the code
